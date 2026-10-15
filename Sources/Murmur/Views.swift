@@ -76,18 +76,23 @@ struct ContentView: View {
                     Waveform(levels: model.levels, active: model.phase == .recording).frame(maxWidth: .infinity)
                 }
 
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $model.text)
-                        .font(.system(size: 13))
-                        .scrollContentBackground(.hidden)
-                        .padding(6)
-                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(nsColor: .textBackgroundColor)))
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.primary.opacity(0.1)))
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8).fill(Color(nsColor: .textBackgroundColor))
                     if model.text.isEmpty {
-                        Text("Your words appear here").font(.system(size: 13)).foregroundStyle(.tertiary)
-                            .padding(.horizontal, 12).padding(.vertical, 14).allowsHitTesting(false)
+                        // No editor while empty: nothing to type into, no stray cursor.
+                        VStack(spacing: 6) {
+                            Image(systemName: "text.bubble").font(.system(size: 20)).foregroundStyle(.quaternary)
+                            Text("Your words appear here").font(.system(size: 12)).foregroundStyle(.tertiary)
+                        }
+                    } else {
+                        TextEditor(text: $model.text)
+                            .font(.system(size: 13))
+                            .scrollContentBackground(.hidden)
+                            .padding(6)
+                            .disabled(model.phase == .recording || model.phase == .transcribing)
                     }
                 }
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.primary.opacity(0.1)))
 
                 HStack {
                     if case .error = model.phase {

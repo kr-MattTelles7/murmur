@@ -15,7 +15,17 @@ Requires an Apple Silicon Mac, [Homebrew](https://brew.sh) and the [GitHub CLI](
 gh api repos/kr-MattTelles7/murmur/contents/scripts/install.sh -H "Accept: application/vnd.github.raw" | bash
 ```
 
-On first launch, click the menu bar icon and download the speech model (~570 MB, once). Allow microphone access when asked.
+The installer sets up everything: the speech engine, the speech model (~570 MB, once) and the app. Allow microphone access the first time you dictate.
+
+## Uninstall
+
+Removes the app, the speech model, settings, caches and the microphone permission:
+
+```bash
+gh api repos/kr-MattTelles7/murmur/contents/scripts/uninstall.sh -H "Accept: application/vnd.github.raw" | bash
+```
+
+Add `-s -- --with-engine` after `bash` to also remove whisper-cpp.
 
 ## Use
 
