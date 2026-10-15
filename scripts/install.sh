@@ -36,6 +36,8 @@ else
 fi
 
 pkill -x Murmur 2>/dev/null || true
+pkill -f "whisper-server.*Application Support/Murmur" 2>/dev/null || true
+sleep 1
 rm -rf /Applications/Murmur.app
 ditto "$TMP/Murmur.app" /Applications/Murmur.app
 open /Applications/Murmur.app
