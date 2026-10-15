@@ -9,10 +9,10 @@ Local, private voice-to-text for macOS. Lives in your menu bar. Press **⌥Space
 
 ## Install
 
-Requires an Apple Silicon Mac, [Homebrew](https://brew.sh) and the [GitHub CLI](https://cli.github.com) (`gh auth login`).
+Requires an Apple Silicon Mac and [Homebrew](https://brew.sh). Paste this in Terminal:
 
 ```bash
-gh api repos/kr-MattTelles7/murmur/contents/scripts/install.sh -H "Accept: application/vnd.github.raw" | bash
+curl -fsSL https://raw.githubusercontent.com/kr-MattTelles7/murmur/main/scripts/install.sh | bash
 ```
 
 The installer sets up everything: the speech engine, the speech model (~570 MB, once) and the app. Allow microphone access the first time you dictate.
@@ -22,7 +22,7 @@ The installer sets up everything: the speech engine, the speech model (~570 MB, 
 Removes the app, the speech model, settings, caches and the microphone permission:
 
 ```bash
-gh api repos/kr-MattTelles7/murmur/contents/scripts/uninstall.sh -H "Accept: application/vnd.github.raw" | bash
+curl -fsSL https://raw.githubusercontent.com/kr-MattTelles7/murmur/main/scripts/uninstall.sh | bash
 ```
 
 Add `-s -- --with-engine` after `bash` to also remove whisper-cpp.

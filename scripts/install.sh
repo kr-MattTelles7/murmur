@@ -1,6 +1,6 @@
 #!/bin/bash
 # Installs Murmur: speech engine, speech model, and the app itself.
-# Usage: gh api repos/kr-MattTelles7/murmur/contents/scripts/install.sh -H "Accept: application/vnd.github.raw" | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/kr-MattTelles7/murmur/main/scripts/install.sh | bash
 # Local testing: MURMUR_APP_SRC=dist/Murmur.app ./scripts/install.sh
 set -euo pipefail
 REPO="${MURMUR_REPO:-kr-MattTelles7/murmur}"
@@ -11,9 +11,6 @@ MODEL_DIR="$HOME/Library/Application Support/Murmur/models"
 
 command -v brew >/dev/null || { echo "Install Homebrew first: https://brew.sh"; exit 1; }
 [ "$(uname -m)" = "arm64" ] || { echo "Murmur needs an Apple Silicon Mac."; exit 1; }
-if [ -z "${MURMUR_APP_SRC:-}" ]; then
-  command -v gh >/dev/null || { echo "Install the GitHub CLI first: brew install gh && gh auth login"; exit 1; }
-fi
 
 echo "→ Installing speech engine (whisper-cpp)…"
 brew list whisper-cpp >/dev/null 2>&1 || brew install whisper-cpp
@@ -34,8 +31,8 @@ if [ -n "${MURMUR_APP_SRC:-}" ]; then
   ditto "$MURMUR_APP_SRC" "$TMP/Murmur.app"
 else
   echo "→ Downloading Murmur…"
-  gh release download --repo "$REPO" --pattern 'Murmur-*.zip' --dir "$TMP"
-  ditto -x -k "$TMP"/Murmur-*.zip "$TMP"
+  curl -fL --progress-bar -o "$TMP/Murmur.zip" "https://github.com/$REPO/releases/latest/download/Murmur.zip"
+  ditto -x -k "$TMP/Murmur.zip" "$TMP"
 fi
 
 pkill -x Murmur 2>/dev/null || true

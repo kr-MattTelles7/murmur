@@ -1,6 +1,6 @@
 #!/bin/bash
 # Removes Murmur and everything it created: app, speech model, settings, caches, mic permission.
-# Usage: gh api repos/kr-MattTelles7/murmur/contents/scripts/uninstall.sh -H "Accept: application/vnd.github.raw" | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/kr-MattTelles7/murmur/main/scripts/uninstall.sh | bash
 # Add `-s -- --with-engine` after `bash` to also remove whisper-cpp. DRY_RUN=1 only prints what would be removed.
 set -uo pipefail
 BUNDLE_ID="com.murmur.app"
